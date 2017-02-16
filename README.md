@@ -140,9 +140,110 @@ treasurehunt展示了一个简单到离谱的寻宝游戏，当vr世界中矩形
         super.onDestroy();
     }
 
+## 5. 事件监听 ##
+   	mVrPanoramaView.setEventListener(mVrPanoramaEventListener);
+
+    private VrPanoramaEventListener mVrPanoramaEventListener = new VrPanoramaEventListener() {
+        /**
+         * 点击回调
+         */
+        @Override
+        public void onClick() {
+            super.onClick();
+        }
+
+        /**
+         * 加载数据成功回调
+         */
+        @Override
+        public void onLoadSuccess() {
+            super.onLoadSuccess();
+        }
+
+        /**
+         * 加载数据失败回调
+         */
+        @Override
+        public void onLoadError(String errorMessage) {
+            super.onLoadError(errorMessage);
+        }
+    };
+
+
 # 360 视频 #
-# 1. 配置build.gradle #
-	//修改minSDK为19
-	minSdkVersion 19
+## 1. 配置build.gradle ##
 	//添加依赖
+	//minSdkVersion 19//已经配置则忽略
     compile 'com.google.vr:sdk-videowidget:1.20.0'
+
+## 2. 配置AndroidManifest.xml (已经配置则忽略)##
+	<application
+        android:largeHeap="true">
+    </application>
+
+## 3. 加载视频 ##
+
+    VrVideoView.Options options = new VrVideoView.Options();
+    options.inputType = VrVideoView.Options.TYPE_STEREO_OVER_UNDER;
+    try {
+        mVrVideoView.loadVideoFromAsset("congo.mp4", options);
+    } catch (IOException e) {
+        e.printStackTrace();
+	}
+
+## 4. 绳命周期管理 ##
+    @Override
+    protected void onPause() {
+        super.onPause();
+        // Prevent the view from rendering continuously when in the background.
+        mVrVideoView.pauseRendering();
+        // If the video is playing when onPause() is called, the default behavior will be to pause
+        // the video and keep it paused when onResume() is called.
+        isPaused = true;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mVrVideoView.resumeRendering();
+    }
+
+    @Override
+    protected void onDestroy() {
+        // Destroy the widget and free memory.
+        mVrVideoView.shutdown();
+        super.onDestroy();
+    }
+
+## 5. 事件监听 ##
+
+    private VrVideoEventListener mVrEventListener = new VrVideoEventListener() {
+
+        @Override
+        public void onLoadError(String errorMessage) {
+            Toast.makeText(VrVideoActivity.this, "onLoadError", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onLoadSuccess() {
+            Toast.makeText(VrVideoActivity.this, "onLoadSuccess", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onNewFrame() {
+        }
+
+        @Override
+        public void onCompletion() {
+            Toast.makeText(VrVideoActivity.this, "onCompletion", Toast.LENGTH_SHORT).show();
+            mVrVideoView.seekTo(0);//播放结束后重新开始播放
+        }
+
+        @Override
+        public void onClick() {
+            togglePause();//点击暂停或者播放
+        }
+    };
+
+
+#  #

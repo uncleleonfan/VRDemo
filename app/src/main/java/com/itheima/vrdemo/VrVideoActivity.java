@@ -24,10 +24,10 @@ public class VrVideoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video);
         mVrVideoView = (VrVideoView) findViewById(R.id.vr_video_view);
+        mVrVideoView.setEventListener(mVrEventListener);
 
         VrVideoView.Options options = new VrVideoView.Options();
         options.inputType = VrVideoView.Options.TYPE_STEREO_OVER_UNDER;
-        mVrVideoView.setEventListener(mVrEventListener);
         try {
             mVrVideoView.loadVideoFromAsset("congo.mp4", options);
         } catch (IOException e) {
