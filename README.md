@@ -140,3 +140,9 @@ treasurehunt展示了一个简单到离谱的寻宝游戏，当vr世界中矩形
         super.onDestroy();
     }
 
+# 360 视频 #
+# 1. 配置build.gradle #
+	//修改minSDK为19
+	minSdkVersion 19
+	//添加依赖
+    compile 'com.google.vr:sdk-videowidget:1.20.0'

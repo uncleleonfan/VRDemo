@@ -14,6 +14,9 @@
         </activity>
 
         <activity android:name=".PanoramaActivity">
+        </activity>
+
+        <activity android:name=".VrVideoActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

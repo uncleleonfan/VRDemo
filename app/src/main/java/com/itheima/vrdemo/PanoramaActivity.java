@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
+import com.google.vr.sdk.widgets.pano.VrPanoramaEventListener;
 import com.google.vr.sdk.widgets.pano.VrPanoramaView;
 
 import java.io.IOException;
@@ -27,9 +28,36 @@ public class PanoramaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_panorama);
         mVrPanoramaView = (VrPanoramaView) findViewById(R.id.panorama_view);
+        mVrPanoramaView.setEventListener(mVrPanoramaEventListener);
         mLoadPanoramaImageTask = new LoadPanoramaImageTask();
         mLoadPanoramaImageTask.execute();
     }
+
+    private VrPanoramaEventListener mVrPanoramaEventListener = new VrPanoramaEventListener() {
+        /**
+         * 点击回调
+         */
+        @Override
+        public void onClick() {
+            super.onClick();
+        }
+
+        /**
+         * 加载数据成功回调
+         */
+        @Override
+        public void onLoadSuccess() {
+            super.onLoadSuccess();
+        }
+
+        /**
+         * 加载数据失败回调
+         */
+        @Override
+        public void onLoadError(String errorMessage) {
+            super.onLoadError(errorMessage);
+        }
+    };
 
 
     private class LoadPanoramaImageTask extends AsyncTask<Void, Void, Bitmap> {
