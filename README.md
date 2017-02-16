@@ -73,3 +73,67 @@ treasurehunt展示了一个简单到离谱的寻宝游戏，当vr世界中矩形
 
 ### videoplayer ###
 使用Asynchronous Rejection播放视频示例
+
+# 全景图 #
+## 1. 配置build.gradle ##
+	//修改minSDK为19
+	minSdkVersion 19
+	//添加依赖
+	compile 'com.google.vr:sdk-panowidget:1.20.0'
+
+
+## 2. 配置AndroidManifest.xml ##
+由于全景图占内存较大，当加载多张全景图时可能存在内存溢出的情况，所以这里开启largeHeap。
+
+	<application
+        android:largeHeap="true">
+    </application>
+
+## 3. 加载全景图（PanoramaActivity） ##
+	private class LoadPanoramaImageTask extends AsyncTask<Void, Void, Bitmap> {
+
+        @Override
+        protected Bitmap doInBackground(Void... params) {
+            try {
+				//加载assets目录下的全景图片
+                AssetManager assetManager = getAssets();
+                InputStream open = assetManager.open("andes.jpg");
+                return BitmapFactory.decodeStream(open);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap bitmap) {
+            VrPanoramaView.Options options = new VrPanoramaView.Options();
+            options.inputType = VrPanoramaView.Options.TYPE_STEREO_OVER_UNDER;
+            mVrPanoramaView.loadImageFromBitmap(bitmap, options);
+        }
+    }
+
+## 4. 绳命周期管理 ##
+	@Override
+    protected void onPause() {
+        mVrPanoramaView.pauseRendering();
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mVrPanoramaView.resumeRendering();
+    }
+
+    @Override
+    protected void onDestroy() {
+        // Destroy the widget and free memory.
+        mVrPanoramaView.shutdown();
+        // The background task has a 5 second timeout so it can potentially stay alive for 5 seconds
+        // after the activity is destroyed unless it is explicitly cancelled.
+        if (mLoadPanoramaImageTask != null) {
+            mLoadPanoramaImageTask.cancel(true);
+        }
+        super.onDestroy();
+    }
