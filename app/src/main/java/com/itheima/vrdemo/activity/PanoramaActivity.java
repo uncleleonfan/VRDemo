@@ -1,4 +1,4 @@
-package com.itheima.vrdemo;
+package com.itheima.vrdemo.activity;
 
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.google.vr.sdk.widgets.pano.VrPanoramaEventListener;
 import com.google.vr.sdk.widgets.pano.VrPanoramaView;
+import com.itheima.vrdemo.R;
 
 import java.io.IOException;
 import java.io.InputStream;

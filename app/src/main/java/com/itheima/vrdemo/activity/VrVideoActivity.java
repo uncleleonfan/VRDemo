@@ -1,4 +1,4 @@
-package com.itheima.vrdemo;
+package com.itheima.vrdemo.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -7,6 +7,7 @@ import android.widget.Toast;
 
 import com.google.vr.sdk.widgets.video.VrVideoEventListener;
 import com.google.vr.sdk.widgets.video.VrVideoView;
+import com.itheima.vrdemo.R;
 
 import java.io.IOException;
 
