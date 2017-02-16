@@ -23,7 +23,9 @@ Google VR for Android支持DayDream和Cardboard。
 	git clone https://github.com/googlevr/gvr-android-sdk.git
 
 ## 官方Sample运行 ##
->注意build失败可使用本地gradle
+导入gvr-android-sdk到Android Studio, 同步的过程中需要下载很多库所以会比较耗时，另外可能出现build失败的情况，这时可以尝试使用本地的gradle来编译。
+grale版本最好为最新版本。
+![](img/gradle.png)
 
 ### simplepanowidget ###
 simplepanowidget展示了印加文明遗迹马丘比丘的全景图(Panorama)
@@ -64,7 +66,7 @@ congo.mp4的视频内容也是分为上下部分，上面给左眼看，下面�
 
 
 ### treasurehunt ###
-treasurehunt展示了一个简单到离谱的寻宝游戏，当vr世界中矩形变成金黄色时，点击手机屏幕或者使用Daydream的控制器，即可完成寻宝。
+treasurehunt展示了一个简单到离谱的寻宝游戏，当vr世界中矩形变成金黄色时，点击手机屏幕或者使用Daydream的控制器，即可完成寻宝。游戏还伴有音效。
 
 ![](img/treasurehunter.gif)
 
@@ -74,7 +76,7 @@ treasurehunt展示了一个简单到离谱的寻宝游戏，当vr世界中矩形
 ### videoplayer ###
 使用Asynchronous Rejection播放视频示例
 
-# 全景图 #
+# 全景图（PanoramaActivity） #
 ## 1. 配置build.gradle ##
 	//修改minSDK为19
 	minSdkVersion 19
@@ -89,7 +91,7 @@ treasurehunt展示了一个简单到离谱的寻宝游戏，当vr世界中矩形
         android:largeHeap="true">
     </application>
 
-## 3. 加载全景图（PanoramaActivity） ##
+## 3. 加载全景图 ##
 	private class LoadPanoramaImageTask extends AsyncTask<Void, Void, Bitmap> {
 
         @Override
@@ -137,3 +139,4 @@ treasurehunt展示了一个简单到离谱的寻宝游戏，当vr世界中矩形
         }
         super.onDestroy();
     }
+
