@@ -49,4 +49,27 @@ Demo代码的主要逻辑就是加载一张全景图放入VrPanoramaView中。
 ![](img/stereo.png)
 
 
-###  ###
+### simeplevideowidget ###
+simeplevideowidget展示了刚果雨林中大猩猩的360视频。
+
+![](img/simplevideowidget.gif)
+
+Demo的核心代码是加载assets目录下的congo.mp4视频到VrVideoView中
+    
+	videoWidgetView.loadVideoFromAsset("congo.mp4", options);
+
+congo.mp4的视频内容也是分为上下部分，上面给左眼看，下面给右眼看。
+
+![](img/congo.png)
+
+
+### treasurehunt ###
+treasurehunt展示了一个简单到离谱的寻宝游戏，当vr世界中矩形变成金黄色时，点击手机屏幕或者使用Daydream的控制器，即可完成寻宝。
+
+![](img/treasurehunter.gif)
+
+### controllerclient ###
+接收DayDream控制器输入示例
+
+### videoplayer ###
+使用Asynchronous Rejection播放视频示例
