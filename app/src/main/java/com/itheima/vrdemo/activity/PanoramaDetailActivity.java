@@ -34,6 +34,9 @@ public class PanoramaDetailActivity extends AppCompatActivity{
         initMediaPlayer();
     }
 
+    /**
+     * 如果有音乐数据则播放音乐
+     */
     private void initMediaPlayer() {
         String mp3 = getIntent().getStringExtra("mp3");
         if (mp3 != null) {
@@ -58,15 +61,16 @@ public class PanoramaDetailActivity extends AppCompatActivity{
     private void initPanoramaView() {
         mVrPanoramaView = (VrPanoramaView) findViewById(R.id.vr_panorama_view);
 //        mVrPanoramaView.setDisplayMode(VrWidgetView.DisplayMode.FULLSCREEN_MONO);//全屏模式，弹出一个全屏的Dialog
-        mVrPanoramaView.setInfoButtonEnabled(false);//关闭信息按钮
-        mVrPanoramaView.setStereoModeButtonEnabled(false);//关闭cardboard按钮
-        mVrPanoramaView.setFullscreenButtonEnabled(false);//关闭全屏按钮
+        mVrPanoramaView.setInfoButtonEnabled(false);//隐藏信息按钮
+        mVrPanoramaView.setStereoModeButtonEnabled(false);//隐藏cardboard按钮
+        mVrPanoramaView.setFullscreenButtonEnabled(false);//隐藏全屏按钮
         mUrl = getIntent().getStringExtra("url");
         OkGo.get(mUrl).cacheKey(mUrl).tag(mUrl).execute(new BitmapCallback() {
 
             @Override
             public void onSuccess(Bitmap bitmap, Call call, Response response) {
                 VrPanoramaView.Options options = new VrPanoramaView.Options();
+                //设置图片类型为单通道图片
                 options.inputType = VrPanoramaView.Options.TYPE_MONO;
                 mVrPanoramaView.loadImageFromBitmap(bitmap, options);
             }

@@ -1,3 +1,6 @@
+# Github #
+[VRDemo](https://github.com/uncleleonfan/VRDemo)
+
 # VR #
 虚拟现实（Virtual Reality）技术是一种可以创建和体验虚拟世界的计算机仿真系统，它利用计算机生成一种模拟环境，是一种多源信息融合的、交互式的三维动态视景和实体行为的系统仿真, 使用户沉浸到该环境中。
 
@@ -43,12 +46,19 @@ simplepanowidget展示了印加文明遗迹马丘比丘的全景图(Panorama)
 
 Demo代码的主要逻辑就是加载一张全景图放入VrPanoramaView中。
 
+    panoOptions = new Options();
+    panoOptions.inputType = Options.TYPE_STEREO_OVER_UNDER;//图像类型为立体图像
 	istr = assetManager.open("andes.jpg");//加载assets目录下的全景图
 	panoWidgetView.loadImageFromBitmap(BitmapFactory.decodeStream(istr), panoOptions);
 
 全景图片andes是由两张图片组成，上面一张是给左眼看，下面一张是给右眼看。
 
 ![](img/stereo.png)
+
+
+图片类型
+
+![](img/image_type.png)
 
 
 ### simeplevideowidget ###
@@ -110,6 +120,7 @@ treasurehunt展示了一个简单到离谱的寻宝游戏，当vr世界中矩形
         @Override
         protected void onPostExecute(Bitmap bitmap) {
             VrPanoramaView.Options options = new VrPanoramaView.Options();
+			//图片类型为立体图像
             options.inputType = VrPanoramaView.Options.TYPE_STEREO_OVER_UNDER;
             mVrPanoramaView.loadImageFromBitmap(bitmap, options);
         }
@@ -184,6 +195,7 @@ treasurehunt展示了一个简单到离谱的寻宝游戏，当vr世界中矩形
 ## 3. 加载视频 ##
 
     VrVideoView.Options options = new VrVideoView.Options();
+	//视频类型为立体视频
     options.inputType = VrVideoView.Options.TYPE_STEREO_OVER_UNDER;
     try {
         mVrVideoView.loadVideoFromAsset("congo.mp4", options);
@@ -246,4 +258,73 @@ treasurehunt展示了一个简单到离谱的寻宝游戏，当vr世界中矩形
     };
 
 
-# MainActivity #
+# Demo #
+![](img/demo.gif)
+
+该Demo简单展示了全景图控件VrPanoramaView的使用，及其相关的基本的配置。
+
+## 初始化VrPanoramaView ##
+    private void initPanoramaView() {
+        mVrPanoramaView = (VrPanoramaView) findViewById(R.id.vr_panorama_view);
+        //mVrPanoramaView.setDisplayMode(VrWidgetView.DisplayMode.FULLSCREEN_MONO);//全屏模式，弹出一个全屏的Dialog
+        mVrPanoramaView.setInfoButtonEnabled(false);//隐藏信息按钮
+        mVrPanoramaView.setStereoModeButtonEnabled(false);//隐藏cardboard按钮
+        mVrPanoramaView.setFullscreenButtonEnabled(false);//隐藏全屏按钮
+        mUrl = getIntent().getStringExtra("url");
+        OkGo.get(mUrl).cacheKey(mUrl).tag(mUrl).execute(new BitmapCallback() {
+
+            @Override
+            public void onSuccess(Bitmap bitmap, Call call, Response response) {
+                VrPanoramaView.Options options = new VrPanoramaView.Options();
+                //设置图片类型为单通道图片
+                options.inputType = VrPanoramaView.Options.TYPE_MONO;
+                mVrPanoramaView.loadImageFromBitmap(bitmap, options);
+            }
+        });
+    }
+
+## 初始化MediaPlayer ##
+    /**
+     * 如果有音乐数据则播放音乐
+     */
+    private void initMediaPlayer() {
+        String mp3 = getIntent().getStringExtra("mp3");
+        if (mp3 != null) {
+            mMediaPlayer = new MediaPlayer();
+            try {
+                mMediaPlayer.setDataSource(this, Uri.parse(mp3));
+                mMediaPlayer.setOnPreparedListener(mOnPreparedListener);
+                mMediaPlayer.prepareAsync();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+## 绳命周期管理 ##
+	@Override
+    protected void onResume() {
+        super.onResume();
+        mVrPanoramaView.resumeRendering();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mVrPanoramaView.pauseRendering();
+        if (mMediaPlayer != null) {
+            mMediaPlayer.pause();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mVrPanoramaView.shutdown();
+        OkGo.getInstance().cancelTag(mUrl);//取消请求
+        if (mMediaPlayer != null) {
+            mMediaPlayer.release();
+            mMediaPlayer = null;
+        }
+    }
