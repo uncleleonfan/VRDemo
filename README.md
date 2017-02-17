@@ -24,7 +24,7 @@ Google VR for Android支持DayDream和Cardboard。
 
 ## 官方Sample运行 ##
 导入gvr-android-sdk到Android Studio, 同步的过程中需要下载很多库所以会比较耗时，另外可能出现build失败的情况，这时可以尝试使用本地的gradle来编译。
-grale版本最好为最新版本。
+gradle版本最好为最新版本。
 ![](img/gradle.png)
 
 ### simplepanowidget ###
@@ -74,7 +74,7 @@ treasurehunt展示了一个简单到离谱的寻宝游戏，当vr世界中矩形
 接收DayDream控制器输入示例
 
 ### videoplayer ###
-使用Asynchronous Rejection播放视频示例
+使用Asynchronous Reprojection播放视频示例
 
 # 全景图（PanoramaActivity） #
 ## 1. 配置build.gradle ##
@@ -246,4 +246,4 @@ treasurehunt展示了一个简单到离谱的寻宝游戏，当vr世界中矩形
     };
 
 
-#  #
+# MainActivity #

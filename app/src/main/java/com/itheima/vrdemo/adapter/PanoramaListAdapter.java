@@ -1,9 +1,12 @@
 package com.itheima.vrdemo.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.view.ViewGroup;
 
+import com.itheima.vrdemo.activity.PanoramaDetailActivity;
 import com.itheima.vrdemo.bean.PanoramaItem;
 import com.itheima.vrdemo.widget.PanoramaItemView;
 
@@ -29,8 +32,17 @@ public class PanoramaListAdapter extends RecyclerView.Adapter<PanoramaListAdapte
     }
 
     @Override
-    public void onBindViewHolder(PanoramaListItemViewHolder holder, int position) {
+    public void onBindViewHolder(PanoramaListItemViewHolder holder, final int position) {
         holder.mPanoramaListItemView.bindView(mDataList.get(position));
+        holder.mPanoramaListItemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, PanoramaDetailActivity.class);
+                intent.putExtra("url", mDataList.get(position).url);
+                intent.putExtra("mp3", mDataList.get(position).mp3);
+                mContext.startActivity(intent);
+            }
+        });
     }
 
     @Override
