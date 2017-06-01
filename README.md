@@ -330,6 +330,40 @@ treasurehunt展示了一个简单到离谱的寻宝游戏，当vr世界中矩形
     }
 
 
+# Google VR SDK for Unity #
+[Google VR SDK for Unity](https://developers.google.com/vr/unity/get-started)
+## 1.下载安装Unity ##
+[Unity](https://unity3d.com/cn/get-unity/download)
+
+系统要求
+
+* 操作系统：Windows 7 SP1+、8、10；Mac OS X 10.8+。
+* GPU：有DX9（着色器模型2.0）功能的显卡。2004年以来的产品应该都可以。
+
+安装时注意选择“Android Build Support”组件安装。没勾选也没关系，后续使用时在下载安装也可。
+
+![](img/android_build_support.png)
+
+## 2.Unity配置Android SDK ##
+![](img/android_sdk.png)
+
+## 3.下载Google VR SDK for Unity ##
+[Google VR for Unity](https://developers.google.com/vr/unity/download#google-vr-sdk-for-unity)
+
+## 4.导入Google VR SDK ##
+
+## 5. Build Settings ##
+* File -> Build Settings -> Switch Platform
+* Player Settings
+
+![](img/player_settings.png)
+
+## 6. 选择Demo ##
+在Assets目录下进入Scenes目录，选择一个Demo，点击运行按钮。按住Alt键并移动鼠标，能360度移动视图。
+![](img/scenes.png)
+
+## 7. 运行 ##
+File -> Build Run (预先连接手机)
 # License #
 	Copyright (c) 2017 uncleleonfan.
 	
