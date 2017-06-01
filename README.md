@@ -10,7 +10,7 @@
 # VR产品 #
 * [Google VR](https://vr.google.com/)
 * [Oculus](https://www.oculus.com/)
-* [HTC Vivi](https://www.vive.com/cn/)
+* [HTC Vive](https://www.vive.com/cn/)
 
 
 # Google VR for Android#
